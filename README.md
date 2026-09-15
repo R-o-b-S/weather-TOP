@@ -1,0 +1,1 @@
+In this The Odin Project assignment I'm going to do a weather forecast website using a free API. Protecting that API is beyond the scope of the assignment. 
