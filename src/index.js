@@ -1,11 +1,13 @@
 import "./styles.css";
 
+const forecast = {};  //this array of Obj will containt the informations needed from VC forecast
+
 async function getLocation () {  //gets the location to search from user and gets the forecast
     const location = document.getElementById("location").value;
     console.log(location);
-    const forecast = await getForecast(location);
+    for (let member in forecast) delete forecast[member]; //empty the obj in case of multiple searches in the same session
+    await getForecast(location);
     console.log(forecast);
-    showForecast(forecast);
 }
 
 document.getElementById("search").onclick = getLocation;
@@ -19,10 +21,11 @@ document.getElementById("location").addEventListener("keyup", function(event) {
 
 async function getForecast (address) { //gets the forecast
     try {
-      const response = await fetch("https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/timeline/" + address + "?key=DAWA9WNY3RQR747DRG7MDFEFK");
-      const forecast = await response.json();
-      console.log(forecast);
-      return forecast;
+        const response = await fetch("https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/timeline/" + address + "?key=DAWA9WNY3RQR747DRG7MDFEFK");
+        const VCforecast = await response.json();
+        console.log(VCforecast);
+        extractForecast(VCforecast);
+        return;
     } catch (error) {
       console.error("fetch error");
     }
@@ -34,14 +37,10 @@ async function getForecast (address) { //gets the forecast
 //namely forecast.days[n].conditions/.description/.tempmax/.tempmin/.humidity
 // then the same for every hour forecast.days[n].hours[i].conditions/
 
-function showForecast (forecast) { //for now prints the forecast on console, this will later manipulate DOM
-    for (let i=0; i<15; i++){
-        console.log("day"+i);
-        showDay(forecast, i);
-    }
-}
-
-function showDay (forecast, i) {
-    console.log("conditions: " + forecast.days[i].conditions);
-    console.log("description: " + forecast.days[i].description);
-}
+function extractForecast (VCforecast) { //builds up the forecast OBJ with only needed information taken from VC forecast
+    forecast["currentTime"] = VCforecast.currentConditions.datetime;
+    forecast["currentConditions"] = VCforecast.currentConditions.conditions;
+    forecast["currentTemperature"] = VCforecast.currentConditions.temp;
+    forecast["currentHumidity"] = VCforecast.currentConditions.humidity;
+    //etc...
+} 
