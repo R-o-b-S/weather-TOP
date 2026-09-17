@@ -27,20 +27,47 @@ async function getForecast (address) { //gets the forecast
         extractForecast(VCforecast);
         return;
     } catch (error) {
-      console.error("fetch error");
+      console.error("error");
     }
 }
 
-//list of information to display from JSON file:
-//general forecast for current day + 14
-//hourly forecast for current day + 14
-//namely forecast.days[n].conditions/.description/.tempmax/.tempmin/.humidity
-// then the same for every hour forecast.days[n].hours[i].conditions/
-
 function extractForecast (VCforecast) { //builds up the forecast OBJ with only needed information taken from VC forecast
+    forecast["location"] = VCforecast.resolvedAddress;
     forecast["currentTime"] = VCforecast.currentConditions.datetime;
     forecast["currentConditions"] = VCforecast.currentConditions.conditions;
     forecast["currentTemperature"] = VCforecast.currentConditions.temp;
     forecast["currentHumidity"] = VCforecast.currentConditions.humidity;
-    //etc...
+    const days = [];
+    for (let i=0; i<15; i++){
+        const date = VCforecast.days[i].datetime;
+        const condition = VCforecast.days[i].conditions;
+        const tempMax = VCforecast.days[i].tempmax;
+        const tempMin = VCforecast.days[i].tempmin;
+        const humidity = VCforecast.days[i].humidity;
+        const hours = [];
+        for (let e=0; e<24; e++){ 
+            const conditionH = VCforecast.days[i].hours[e].conditions;
+            const tempH = VCforecast.days[i].hours[e].temp;
+            const hour = new Hour (conditionH, tempH);
+            hours.push(hour);
+        }
+        const day = new Day(date, condition, tempMax, tempMin, humidity, hours);
+        days.push(day);
+    }
+    forecast["days"] = days;
 } 
+
+
+function Day (date, condition, tempMax, tempMin, humidity, hours) {
+    this.date = date;
+    this.condition = condition;
+    this.tempMax = tempMax;
+    this.tempMin = tempMin;
+    this.humidity = humidity;
+    this.hours = hours;
+}
+
+function Hour (conditionH, tempH) {
+    this.condition = conditionH;
+    this.temp = tempH;
+}
