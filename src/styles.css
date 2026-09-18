@@ -1,0 +1,62 @@
+
+html {
+    --color1: #f2f6ff; /*background color*/
+    --color2: #1b6583; /*borders*/
+    --color3: #000000; /*text*/
+    --color4: #8b54a5; /*glow*/
+}
+
+body {
+    background-color: var(--color1);
+    margin: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+.searchbox { /*style for the searchbox div*/
+    --target-size: 48px;
+    --box-height: var(--target-size);
+    height: var(--box-height);
+    --border-width: 2px;
+    --border-radius: calc(var(--box-height) / 2);
+    max-width: 561px;
+    --icon-size: calc(var(--box-height) * 3 / 4);
+    position: relative;
+    --side-margin: calc(var(--border-radius) / 2);
+    --icon-vertical-margin: calc((var(--box-height) - var(--icon-size)) / 2);
+}
+.searchbox input[type='search'] { /*style for the searchbox input element*/
+    border: var(--border-width) solid var(--color2);   
+    border-radius: var(--border-radius);
+    height: 100%;
+    width: 100%;
+    color: var(--color3);
+    font-family: 'Noto Sans', Verdana, sans-serif;
+    font-size: 1rem;
+    padding-left: calc(var(--side-margin) + var(--icon-size) + 4px);
+    padding-right: var(--side-margin);
+}
+
+.searchbox input[type='search']::placeholder { /* Style for searchbar placeholder */
+  color: gray;
+  opacity: 1; 
+} 
+
+.searchbox svg { /* Style for the magnifying glass icon */
+    fill: var(--color2);
+    height: var(--icon-size);
+    width: var(--icon-size);
+    left: var(--side-margin);
+    top: var(--icon-vertical-margin); 
+    bottom: var(--icon-vertical-margin); 
+    position: absolute;
+    pointer-events: none; /*click on icon is the same as a click in the box*/
+}
+
+.searchbox input[type='search']:focus { /*style searchbox focus ring*/
+  border-color: var(--color4);
+  box-shadow: 0px 0px 5px var(--color4);
+  outline: 1px solid transparent; 
+}

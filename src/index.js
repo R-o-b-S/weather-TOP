@@ -10,14 +10,14 @@ async function getLocation () {  //gets the location to search from user and get
     console.log(forecast);
 }
 
-document.getElementById("search").onclick = getLocation;
+//document.getElementById("search").onclick = getLocation;
 
 document.getElementById("location").addEventListener("keyup", function(event) {
     event.preventDefault();
     if (event.keyCode === 13) {
-        document.getElementById("search").click();
+        getLocation();
     }
-});  //this one clicks the search button if the user presses Enter in the input box
+});  //this one start the search on Enter press
 
 async function getForecast (address) { //gets the forecast
     try {
@@ -71,3 +71,5 @@ function Hour (conditionH, tempH) {
     this.condition = conditionH;
     this.temp = tempH;
 }
+
+//parte grafica
