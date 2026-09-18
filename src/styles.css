@@ -1,9 +1,13 @@
-
 html {
     --color1: #f2f6ff; /*background color*/
-    --color2: #1b6583; /*borders*/
-    --color3: #000000; /*text*/
-    --color4: #8b54a5; /*glow*/
+    --color2: #4a859c; /*borders*/
+    --color3: #2b2222; /*text*/
+    --color4: #e2b22e; /*glow*/
+}
+
+@font-face {
+  font-family: Norse;
+  src: url(../font/Norsebold.otf);
 }
 
 body {
@@ -13,6 +17,7 @@ body {
     justify-content: center;
     align-items: center;
     height: 100vh;
+    color: var(--color3);
 }
 
 .searchbox { /*style for the searchbox div*/
@@ -59,4 +64,36 @@ body {
   border-color: var(--color4);
   box-shadow: 0px 0px 5px var(--color4);
   outline: 1px solid transparent; 
+}
+
+#logo {
+    display: flex;
+    flex-direction: row;
+    align-content: center;
+    justify-content: center;
+    margin: 4px;
+    height: 5rem;
+    position: relative;
+}
+
+#logoSVG {
+    height: 4.8rem;
+    width: 4.8rem;
+    position: absolute;
+    left: 30%;
+    z-index: -1;
+}
+
+#logoName {
+    font-family: Norse;
+    font-size: 2rem;
+    align-self: end;
+}
+
+.SVGsun {
+    fill: var(--color4);
+}
+
+#SVGcloud {
+    fill: var(--color2);
 }
