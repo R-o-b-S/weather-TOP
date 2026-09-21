@@ -8,9 +8,8 @@ async function getLocation () {  //gets the location to search from user and get
     for (let member in forecast) delete forecast[member]; //empty the obj in case of multiple searches in the same session
     await getForecast(location);
     console.log(forecast);
+    refresh ();
 }
-
-//document.getElementById("search").onclick = getLocation;
 
 document.getElementById("location").addEventListener("keyup", function(event) {
     event.preventDefault();
@@ -73,3 +72,36 @@ function Hour (conditionH, tempH) {
 }
 
 //parte grafica
+
+//prima di tutto serve una funzione che ripulisce lo schermo 
+//da sviluppare dando come input la zona da ripulire se possibile
+//poi un'altra che riordina la parte superiore
+//sviluppare una funzione di attesa mentre si aspetta risposta dal server
+//poi bisogna andare a comporre l'area principale dove le previsioni sono organizzate per giorno
+//poi un'area inferiore dove ci sono le previsioni orarie
+//poi cliccando sul giorno cambiano le informazioni sulle previsioni messe in evidenza, ovviamente
+
+function remove (e) { //function that removes DOM single elements
+    const element = document.getElementById(e);
+    element.remove();
+}
+
+let first = 0; //0 never researched, 1 DOM already changed the first time
+
+function refresh  () { //refreshes the DOM
+    if (first === 0){
+        switchHeadDOM();
+        first++;
+    } else if (first === 1){
+        console.log("work in progress");
+    }
+}
+
+function switchHeadDOM () { //switch head id CSS style
+    const element = document.getElementById("header");
+    element.id = "header2";
+}
+
+function buildMainDOM () { //builds main id DOM
+    console.log("work in progress");
+}
