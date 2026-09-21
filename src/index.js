@@ -31,11 +31,11 @@ async function getForecast (address) { //gets the forecast
 }
 
 function extractForecast (VCforecast) { //builds up the forecast OBJ with only needed information taken from VC forecast
-    forecast["location"] = VCforecast.resolvedAddress;
+    forecast["location"] = upperCase (VCforecast.resolvedAddress);
     forecast["currentTime"] = VCforecast.currentConditions.datetime;
     forecast["currentConditions"] = VCforecast.currentConditions.conditions;
-    forecast["currentTemperature"] = VCforecast.currentConditions.temp;
-    forecast["currentHumidity"] = VCforecast.currentConditions.humidity;
+//    forecast["currentTemperature"] = VCforecast.currentConditions.temp;
+//    forecast["currentHumidity"] = VCforecast.currentConditions.humidity;
     const days = [];
     for (let i=0; i<15; i++){
         const date = VCforecast.days[i].datetime;
@@ -71,6 +71,10 @@ function Hour (conditionH, tempH) {
     this.temp = tempH;
 }
 
+function upperCase (city) { //converts the first letter of a string to upper case
+    return String(city).charAt(0).toUpperCase() + String(city).slice(1);
+}
+
 //parte grafica
 
 //prima di tutto serve una funzione che ripulisce lo schermo 
@@ -91,6 +95,7 @@ function refresh  () { //refreshes the DOM
     if (first === 0){
         switchHeadDOM();
         first++;
+        buildSummary();
     } else if (first === 1){
         console.log("work in progress");
     }
@@ -104,3 +109,38 @@ function switchHeadDOM () { //switch head id CSS style
 function buildMainDOM () { //builds main id DOM
     console.log("work in progress");
 }
+
+function buildSummary () { //builds the summary ID in "main"
+    const newDiv = document.createElement("div");
+    newDiv.classList = "container";
+    newDiv.id = "summary";
+    document.getElementById("main").appendChild(newDiv);
+
+    const newDiv2 = document.createElement("div");
+    newDiv2.id = "container_S";
+    document.getElementById("summary").appendChild(newDiv2);
+
+    const newDiv3 = document.createElement("div");
+    newDiv3.id = "city";
+    let txt = forecast.location;
+    newDiv3.textContent = txt;
+    document.getElementById("container_S").appendChild(newDiv3);
+
+    const newDiv4 = document.createElement("div");
+    newDiv4.id = "condition";
+    txt = "Now: " + forecast.currentCondition;
+    newDiv4.textContent = txt;
+    document.getElementById("container_S").appendChild(newDiv4);
+
+    const newDiv5 = document.createElement("div");
+    newDiv5.classList = "container";
+    newDiv5.id = "unit";
+    document.getElementById("summary").appendChild(newDiv5);
+
+    const newDiv6 = document.createElement("div");
+    newDiv6.id = "unitSelection";
+    txt = "Show in °C";
+    document.getElementById("unit").appendChild(newDiv6);
+}
+
+
