@@ -121,3 +121,96 @@ body {
 #SVGcloud {
     fill: var(--color2);
 }
+
+#main {
+    display: flex;
+    flex-direction: column;
+    padding-top: 2rem;
+    padding-left: 8%;
+    padding-right: 8%;
+}
+
+.container {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+}
+
+#unitSelection {
+    margin: 0;
+    background-color: var(--color2);
+    border: solid 1px var(--color3);
+    border-radius: 1rem;
+    height: 2rem;
+    color: var(--color1);
+    padding-left: 1rem;
+    padding-right: 1rem;
+    font-weight: bold;
+}
+
+#unitSelection:hover {
+    background-color: var(--color4);
+    border: solid 1px var(--color3);
+    color: var(--color3);
+    opacity: 0.9;
+}
+
+#city {
+    font-style: italic;
+    font-size: 2rem;
+}
+
+#condition {
+    font-style: italic;
+    font-size: 0.8rem;
+}
+
+#forecast {
+    margin-top: 1rem;
+    justify-content: space-around;
+}
+
+.daySlide {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-content: center;
+    min-width: 80px;
+    width: 10%;
+    padding: 0.7rem;
+}
+
+.daySlide.selected {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-content: center;
+    min-width: 80px;
+    width: 10%;
+    padding: 0.7rem;
+    border: 1px solid var(--color2);
+    border-radius: 0.5rem;
+    box-shadow: 2px 1px 5px var(--color2);
+}
+
+.dateContainer {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+}
+
+.dayNumber {
+    font-size: 1.4rem;
+    font-weight: bold;
+    margin-right: 0.5rem;
+}
+
+.dayName {
+    font-style: italic;
+}
+
+.data {
+    font-size: 0.8rem;
+}

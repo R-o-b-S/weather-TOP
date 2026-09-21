@@ -75,7 +75,6 @@ function Hour (conditionH, tempH) {
 
 //prima di tutto serve una funzione che ripulisce lo schermo 
 //da sviluppare dando come input la zona da ripulire se possibile
-//poi un'altra che riordina la parte superiore
 //sviluppare una funzione di attesa mentre si aspetta risposta dal server
 //poi bisogna andare a comporre l'area principale dove le previsioni sono organizzate per giorno
 //poi un'area inferiore dove ci sono le previsioni orarie
@@ -86,7 +85,7 @@ function remove (e) { //function that removes DOM single elements
     element.remove();
 }
 
-let first = 0; //0 never researched, 1 DOM already changed the first time
+let first = 1; //0 never researched, 1 DOM already changed the first time
 
 function refresh  () { //refreshes the DOM
     if (first === 0){
