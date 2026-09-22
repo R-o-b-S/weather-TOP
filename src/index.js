@@ -100,7 +100,9 @@ function refresh  () { //refreshes the DOM
         first++;
         buildMainDOM();
     } else if (first === 1){
-        console.log("work in progress");
+        remove ("summary");
+        remove ("forecast");
+        buildMainDOM();
     }
 }
 
