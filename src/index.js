@@ -37,7 +37,7 @@ function extractForecast (VCforecast) { //builds up the forecast OBJ with only n
 //    forecast["currentTemperature"] = VCforecast.currentConditions.temp;
 //    forecast["currentHumidity"] = VCforecast.currentConditions.humidity;
     const days = [];
-    for (let i=0; i<15; i++){
+    for (let i=0; i<14; i++){
         const date = VCforecast.days[i].datetime;
         const condition = VCforecast.days[i].conditions;
         const tempMax = VCforecast.days[i].tempmax;
@@ -90,6 +90,9 @@ function remove (e) { //function that removes DOM single elements
 }
 
 let first = 1; //0 never researched, 1 DOM already changed the first time
+let week = 0; //0 stands for the first 7 days of the forecast, 7 for the second week of the forecast (just for DOM manipulation)
+//will need later for a button that sets week from 0 to 7 and then calls refresh (and back)
+let daySelected = 0; //variable to identify the day currently selected by the user
 
 function refresh  () { //refreshes the DOM
     if (first === 0){
@@ -141,6 +144,57 @@ function buildSummary () { //builds the summary ID in "main"
     newDiv6.id = "unitSelection";
     txt = "Show in °C";
     document.getElementById("unit").appendChild(newDiv6);
+}
+
+function buildForecast () { //builds the second main section: forecast
+    const newDiv = document.createElement("div");
+    newDiv.classList = "container";
+    newDiv.id = "forecast";
+    document.getElementById("main").appendChild(newDiv);
+
+    buildDaySlide ();
+}
+
+function getDayNumber (date) { //takes only the day number from a given date
+    const dayN = new Date(date).getDate();
+    return dayN;
+}
+
+function getDayName (date) { //takes day name from a given date
+    const dayN = new Date(date);
+    const days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+    const dayString = days[dayN.getDay()];
+    return dayString;
+}
+
+function buildDaySlide () { //builds the daily slides in the forecast div
+    for (let i=week; i<week+7; i++) {
+        const newDiv = document.createElement("div");
+        if (i === daySelected) {
+            newDiv.classList = "daySlide selected"; 
+        } else {
+            newDiv.classList = "daySlide";
+        }
+        newDiv.id = "day"+i;
+        document.getElementById("forecast").appendChild(newDiv);
+
+        const newDiv2 = document.createElement("div");
+        newDiv2.classList = "cdateContainer";
+        newDiv2.id = "dc"+i;
+        document.getElementById("day"+i).appendChild(newDiv2);
+
+        const newDiv3 = document.createElement("div");
+        newDiv3.classList = "dayNumber";
+        let txt = getDayNumber(forecast.days[i].date);
+        newDiv3.textContent = txt;
+        document.getElementById("dc"+i).appendChild(newDiv3);
+
+        const newDiv4 = document.createElement("div");
+        newDiv4.classList = "dayName";
+        txt = getDayName(forecast.days[i].date);
+        newDiv4.textContent = txt;
+        document.getElementById("dc"+i).appendChild(newDiv4);
+    }
 }
 
 
