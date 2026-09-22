@@ -47,7 +47,8 @@ function extractForecast (VCforecast) { //builds up the forecast OBJ with only n
         for (let e=0; e<24; e++){ 
             const conditionH = VCforecast.days[i].hours[e].conditions;
             const tempH = VCforecast.days[i].hours[e].temp;
-            const hour = new Hour (conditionH, tempH);
+            const humidityH = VCforecast.days[i].hours[e].humidity;
+            const hour = new Hour (conditionH, tempH, humidityH);
             hours.push(hour);
         }
         const day = new Day(date, condition, tempMax, tempMin, humidity, hours);
@@ -66,9 +67,10 @@ function Day (date, condition, tempMax, tempMin, humidity, hours) {
     this.hours = hours;
 }
 
-function Hour (conditionH, tempH) {
+function Hour (conditionH, tempH, humidityH) {
     this.condition = conditionH;
     this.temp = tempH;
+    this.humidity = humidityH;
 }
 
 function upperCase (city) { //converts the first letter of a string to upper case

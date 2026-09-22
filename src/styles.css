@@ -230,3 +230,24 @@ body {
 .data {
     font-size: 0.8rem;
 }
+
+#infoByHour {
+    display: flex;
+    flex-direction: column;
+    margin-top: 2rem;
+    font-size: 0.8rem;
+}
+
+.hour {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+}
+
+.hour.contrast{
+    background-color: #4a859c;
+}
+
+.dataH {
+    margin-right: 1rem;
+}
