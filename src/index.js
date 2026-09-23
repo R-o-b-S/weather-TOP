@@ -5,11 +5,10 @@ const forecast = {};  //this array of Obj will containt the informations needed 
 async function getLocation () {  //gets the location to search from user and gets the forecast
     loading();
     const location = document.getElementById("location").value;
-    console.log(location);
     for (let member in forecast) delete forecast[member]; //empty the obj in case of multiple searches in the same session
-    await getForecast(location);
-    console.log(forecast);
+    const chk = await getForecast(location);
     loadingEnd ();
+    if (chk === false) { return; }; // stops the function in case of error during fetch
     refresh ();
 }
 
@@ -24,11 +23,11 @@ async function getForecast (address) { //gets the forecast
     try {
         const response = await fetch("https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/timeline/" + address + "?key=DAWA9WNY3RQR747DRG7MDFEFK");
         const VCforecast = await response.json();
-        console.log(VCforecast);
         extractForecast(VCforecast);
-        return;
+        return true;
     } catch (error) {
-      console.error("error");
+        alert("bad request, try again");
+        return false;
     }
 }
 
@@ -425,7 +424,7 @@ function loading () {  //function to start the loading animation
 
 } //it has to be stopped calling loadingEnd();
 
-function loadingEnd() {
+function loadingEnd() { //stops loading animation
     remove ("loader");
     remove ("loadBackground");
 }
