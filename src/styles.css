@@ -288,3 +288,31 @@ body {
 #arrowIcon:hover {
     fill:var(--color4);
 }
+
+#loader {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    z-index: 2;
+    width: 60px;
+    height: 60px;
+    margin: -76px 0 0 -76px;
+    border: 16px solid #f3f3f3;
+    border-radius: 50%;
+    border-top: 16px solid var(--color2);
+    -webkit-animation: spin 2s linear infinite;
+    animation: spin 2s linear infinite;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+#loadBackground {
+    position: absolute;
+    z-index: 1;
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(161, 173, 206, 0.5);
+}

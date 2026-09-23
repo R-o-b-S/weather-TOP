@@ -3,11 +3,13 @@ import "./styles.css";
 const forecast = {};  //this array of Obj will containt the informations needed from VC forecast
 
 async function getLocation () {  //gets the location to search from user and gets the forecast
+    loading();
     const location = document.getElementById("location").value;
     console.log(location);
     for (let member in forecast) delete forecast[member]; //empty the obj in case of multiple searches in the same session
     await getForecast(location);
     console.log(forecast);
+    loadingEnd ();
     refresh ();
 }
 
@@ -410,4 +412,20 @@ function buildInfo () {  //build the InfoByHour section in the DOM
         newDiv13.textContent = txt;
         document.getElementById("cHd"+i).appendChild(newDiv13);
     }
+}
+
+function loading () {  //function to start the loading animation
+    const newDiv = document.createElement("div");
+    newDiv.id = "loader";
+    document.getElementById("main").appendChild(newDiv);
+
+    const newDiv2 = document.createElement("div");
+    newDiv2.id = "loadBackground";
+    document.body.appendChild(newDiv2);
+
+} //it has to be stopped calling loadingEnd();
+
+function loadingEnd() {
+    remove ("loader");
+    remove ("loadBackground");
 }
