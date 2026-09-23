@@ -158,7 +158,35 @@ function buildForecast () { //builds the second main section: forecast
     newDiv.id = "forecast";
     document.getElementById("main").appendChild(newDiv);
 
+    if (week === 7) {addWeekButton()};
     buildDaySlide ();
+    if (week === 0) {addWeekButton()};
+}
+
+function weekScroll () {
+    if (week === 0) {
+        week = 7;
+        refresh();
+    } else if (week === 7) {
+        week = 0;
+        refresh();
+    }
+}
+
+function addWeekButton () {
+    if (week === 0) {
+        const newButton = document.createElement("button");
+        newButton.id = "weekSelection";
+        newButton.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" id="arrowIcon" viewBox="0 0 24 24"><title>menu-right</title><path d="M10,17L15,12L10,7V17Z" /></svg>'
+        newButton.addEventListener("click", weekScroll);
+        document.getElementById("forecast").appendChild(newButton);
+    } else if (week === 7) {
+        const newButton = document.createElement("button");
+        newButton.id = "weekSelection";
+        newButton.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" id="arrowIcon" viewBox="0 0 24 24"><title>menu-left</title><path d="M14,7L9,12L14,17V7Z" /></svg>'
+        newButton.addEventListener("click", weekScroll);
+        document.getElementById("forecast").appendChild(newButton);
+    }
 }
 
 function getDayNumber (date) { //takes only the day number from a given date
@@ -202,7 +230,7 @@ function buildDaySlide () { //builds the daily slides in the forecast div
         document.getElementById("dc"+i).appendChild(newDiv4);
 
         txt = assignSVG(forecast.days[i].condition); //add SVG to slide
-        newDiv.innerHTML = txt;
+        newDiv.innerHTML += txt;
 
         const newDiv5 = document.createElement("div");
         newDiv5.id = "condition";

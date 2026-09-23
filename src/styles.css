@@ -271,3 +271,19 @@ body {
     width: 20%;
     justify-content: center;
 }
+
+#weekSelection {
+    padding: 0;
+    background-color: transparent;
+    border: none;
+}
+
+#arrowIcon {
+    height: 3rem;
+    width: 3rem;
+    fill:var(--color2);
+}
+
+#arrowIcon:hover {
+    fill:var(--color4);
+}
