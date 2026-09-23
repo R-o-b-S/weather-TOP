@@ -1,8 +1,9 @@
 html {
     --color1: #f2f6ff; /*background color*/
-    --color2: #4a859c; /*borders*/
+    --color2: #095574; /*borders*/
     --color3: #2b2222; /*text*/
     --color4: #e2b22e; /*glow*/
+    --color5: #4a859c;
 }
 
 @font-face {
@@ -119,7 +120,7 @@ body {
 }
 
 #SVGcloud {
-    fill: var(--color2);
+    fill: var(--color5);
 }
 
 #main {
@@ -245,7 +246,7 @@ body {
 }
 
 .hour.contrast{
-    background-color: #4a859c;
+    background-color: #83b1c4;
 }
 
 .dataH {
