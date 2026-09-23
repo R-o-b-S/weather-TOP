@@ -251,3 +251,22 @@ body {
 .dataH {
     margin-right: 1rem;
 }
+
+.container.hourC {
+    width: 20%;
+    justify-content: space-between;
+    padding-left: 4%;
+    padding-right: 4%;
+}
+
+.container.hour {
+    width: 20%;
+    justify-content: space-around;
+    padding-left: 4%;
+    padding-right: 4%;
+}
+
+.container.hourH {
+    width: 20%;
+    justify-content: center;
+}

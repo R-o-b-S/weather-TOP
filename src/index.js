@@ -34,8 +34,6 @@ function extractForecast (VCforecast) { //builds up the forecast OBJ with only n
     forecast["location"] = upperCase (VCforecast.resolvedAddress);
     forecast["currentTime"] = VCforecast.currentConditions.datetime;
     forecast["currentConditions"] = VCforecast.currentConditions.conditions;
-//    forecast["currentTemperature"] = VCforecast.currentConditions.temp;
-//    forecast["currentHumidity"] = VCforecast.currentConditions.humidity;
     const days = [];
     for (let i=0; i<14; i++){
         const date = VCforecast.days[i].datetime;
@@ -104,6 +102,7 @@ function refresh  () { //refreshes the DOM
     } else if (first === 1){
         remove ("summary");
         remove ("forecast");
+        remove ("infoByHour");
         buildMainDOM();
     }
 }
@@ -116,6 +115,7 @@ function switchHeadDOM () { //switch head id CSS style
 function buildMainDOM () { //builds main id DOM
     buildSummary();
     buildForecast();
+    buildInfo();
 }
 
 function buildSummary () { //builds the summary ID in "main"
@@ -289,5 +289,101 @@ function assignSVG (condition) { //takes the day condition and returns the appro
     } else {
         const svg = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="#4a859c"><title>weather-fog</title><path d="M3,15H13A1,1 0 0,1 14,16A1,1 0 0,1 13,17H3A1,1 0 0,1 2,16A1,1 0 0,1 3,15M16,15H21A1,1 0 0,1 22,16A1,1 0 0,1 21,17H16A1,1 0 0,1 15,16A1,1 0 0,1 16,15M1,12A5,5 0 0,1 6,7C7,4.65 9.3,3 12,3C15.43,3 18.24,5.66 18.5,9.03L19,9C21.19,9 22.97,10.76 23,13H21A2,2 0 0,0 19,11H17V10A5,5 0 0,0 12,5C9.5,5 7.45,6.82 7.06,9.19C6.73,9.07 6.37,9 6,9A3,3 0 0,0 3,12C3,12.35 3.06,12.69 3.17,13H1.1L1,12M3,19H5A1,1 0 0,1 6,20A1,1 0 0,1 5,21H3A1,1 0 0,1 2,20A1,1 0 0,1 3,19M8,19H21A1,1 0 0,1 22,20A1,1 0 0,1 21,21H8A1,1 0 0,1 7,20A1,1 0 0,1 8,19Z" /></svg>';
         return svg;
+    }
+}
+
+function isEven (n) { //function to determine if a given number is even or odd
+    if (n % 2 == 0){
+       return(true);
+    }
+    else{
+       return(false);    
+    }
+}
+
+function buildInfo () {  //build the InfoByHour section in the DOM
+    const newDiv = document.createElement("div");
+    newDiv.id = "infoByHour";
+    document.getElementById("main").appendChild(newDiv);
+
+    for (let i=0; i<24; i++) {
+        const newDiv = document.createElement("div");
+        if (isEven(i) === true) {
+            newDiv.classList = "hour";
+        } else if (isEven(i) === false) {
+            newDiv.classList = "hour contrast";
+        }
+        newDiv.id = "h"+i;
+        document.getElementById("infoByHour").appendChild(newDiv);
+
+        const newDiv2 = document.createElement("div");
+        newDiv2.classList = "container hourH";
+        newDiv2.id = "cHa"+i;
+        document.getElementById("h"+i).appendChild(newDiv2);
+
+        const newDiv3 = document.createElement("div");
+        newDiv3.classList = "dataH";
+        let txt = "Hour:";
+        newDiv3.textContent = txt;
+        document.getElementById("cHa"+i).appendChild(newDiv3);
+
+        const newDiv4 = document.createElement("div");
+        newDiv4.classList = "data";
+        if (i < 10) {
+            txt = "0"+i;
+        } else {txt = i;}
+        newDiv4.textContent = txt;
+        document.getElementById("cHa"+i).appendChild(newDiv4);
+
+        const newDiv5 = document.createElement("div");
+        newDiv5.classList = "container hourC";
+        newDiv5.id = "cHb"+i;
+        document.getElementById("h"+i).appendChild(newDiv5);
+
+        const newDiv6 = document.createElement("div");
+        newDiv6.classList = "dataH";
+        txt = "Condition:";
+        newDiv6.textContent = txt;
+        document.getElementById("cHb"+i).appendChild(newDiv6);
+
+        const newDiv7 = document.createElement("div");
+        newDiv7.classList = "data";
+        txt = forecast.days[daySelected].hours[i].condition;
+        newDiv7.textContent = txt;
+        document.getElementById("cHb"+i).appendChild(newDiv7);
+
+        const newDiv8 = document.createElement("div");
+        newDiv8.classList = "container hour";
+        newDiv8.id = "cHc"+i;
+        document.getElementById("h"+i).appendChild(newDiv8);
+
+        const newDiv9 = document.createElement("div");
+        newDiv9.classList = "dataH";
+        txt = "Temperature:";
+        newDiv9.textContent = txt;
+        document.getElementById("cHc"+i).appendChild(newDiv9);
+
+        const newDiv10 = document.createElement("div");
+        newDiv10.classList = "data";
+        txt = forecast.days[daySelected].hours[i].temp;
+        newDiv10.textContent = txt;
+        document.getElementById("cHc"+i).appendChild(newDiv10);
+
+        const newDiv11 = document.createElement("div");
+        newDiv11.classList = "container hour";
+        newDiv11.id = "cHd"+i;
+        document.getElementById("h"+i).appendChild(newDiv11);
+
+        const newDiv12 = document.createElement("div");
+        newDiv12.classList = "dataH";
+        txt = "Humidity:";
+        newDiv12.textContent = txt;
+        document.getElementById("cHd"+i).appendChild(newDiv12);
+
+        const newDiv13 = document.createElement("div");
+        newDiv13.classList = "data";
+        txt = forecast.days[daySelected].hours[i].humidity;
+        newDiv13.textContent = txt;
+        document.getElementById("cHd"+i).appendChild(newDiv13);
     }
 }
