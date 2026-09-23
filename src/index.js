@@ -75,14 +75,7 @@ function upperCase (city) { //converts the first letter of a string to upper cas
     return String(city).charAt(0).toUpperCase() + String(city).slice(1);
 }
 
-//parte grafica
-
-//prima di tutto serve una funzione che ripulisce lo schermo 
-//da sviluppare dando come input la zona da ripulire se possibile
-//sviluppare una funzione di attesa mentre si aspetta risposta dal server
-//poi bisogna andare a comporre l'area principale dove le previsioni sono organizzate per giorno
-//poi un'area inferiore dove ci sono le previsioni orarie
-//poi cliccando sul giorno cambiano le informazioni sulle previsioni messe in evidenza, ovviamente
+//Dom manipulation
 
 function remove (e) { //function that removes DOM single elements
     const element = document.getElementById(e);
@@ -163,17 +156,19 @@ function buildForecast () { //builds the second main section: forecast
     if (week === 0) {addWeekButton()};
 }
 
-function weekScroll () {
+function weekScroll () { //switch between weeks
     if (week === 0) {
         week = 7;
+        daySelected = 7;
         refresh();
     } else if (week === 7) {
         week = 0;
+        saySelected = 0;
         refresh();
     }
 }
 
-function addWeekButton () {
+function addWeekButton () { //display the button to change week
     if (week === 0) {
         const newButton = document.createElement("button");
         newButton.id = "weekSelection";
@@ -210,6 +205,7 @@ function buildDaySlide () { //builds the daily slides in the forecast div
             newDiv.classList = "daySlide";
         }
         newDiv.id = "day"+i;
+        newDiv.addEventListener("click", selectDay => {daySelected = i; refresh();}); //allows the user to selct a new day to see in dail in infoByHour
         document.getElementById("forecast").appendChild(newDiv);
 
         const newDiv2 = document.createElement("div");
