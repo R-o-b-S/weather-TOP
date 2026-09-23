@@ -141,8 +141,10 @@ function buildSummary () { //builds the summary ID in "main"
 
     const newDiv6 = document.createElement("button");
     newDiv6.id = "unitSelection";
-    txt = "Show in °C";
+    if (degreeInUse === 0){ txt = "Show in °C"; }
+    else if (degreeInUse === 1) { txt = "Show in °F"; }
     newDiv6.textContent = txt;
+    newDiv6.addEventListener("click", tempConverter);
     document.getElementById("unit").appendChild(newDiv6);
 }
 
@@ -164,7 +166,7 @@ function weekScroll () { //switch between weeks
         refresh();
     } else if (week === 7) {
         week = 0;
-        saySelected = 0;
+        daySelected = 0;
         refresh();
     }
 }
@@ -248,7 +250,8 @@ function buildDaySlide () { //builds the daily slides in the forecast div
 
         const newDiv8 = document.createElement("div");
         newDiv8.classList = "data";
-        txt = forecast.days[i].tempMax;
+        if (degreeInUse === 0){ txt = forecast.days[i].tempMax + " °F"; }
+        else if (degreeInUse === 1) { txt = forecast.days[i].tempMax + " °C"; }
         newDiv8.textContent = txt;
         document.getElementById("ht"+i).appendChild(newDiv8);
 
@@ -265,7 +268,8 @@ function buildDaySlide () { //builds the daily slides in the forecast div
 
         const newDiv11 = document.createElement("div");
         newDiv11.classList = "data";
-        txt = forecast.days[i].tempMin;
+        if (degreeInUse === 0){ txt = forecast.days[i].tempMin + " °F"; }
+        else if (degreeInUse === 1) { txt = forecast.days[i].tempMin + " °C"; }
         newDiv11.textContent = txt;
         document.getElementById("lt"+i).appendChild(newDiv11);
     }
@@ -390,7 +394,8 @@ function buildInfo () {  //build the InfoByHour section in the DOM
 
         const newDiv10 = document.createElement("div");
         newDiv10.classList = "data";
-        txt = forecast.days[daySelected].hours[i].temp;
+        if (degreeInUse === 0){ txt = forecast.days[daySelected].hours[i].temp + " °F"; }
+        else if (degreeInUse === 1) { txt = forecast.days[daySelected].hours[i].temp + " °C"; }
         newDiv10.textContent = txt;
         document.getElementById("cHc"+i).appendChild(newDiv10);
 
@@ -427,4 +432,44 @@ function loading () {  //function to start the loading animation
 function loadingEnd() { //stops loading animation
     remove ("loader");
     remove ("loadBackground");
+}
+
+let degreeInUse = 0; //0 for farenights and 1 for Celsius
+
+function tempConverter () {  // converts F in C and back
+    if (degreeInUse === 0) {
+        for(let i=0; i<14; i++) {
+            forecast.days[i].tempMax = fToC (forecast.days[i].tempMax);
+            forecast.days[i].tempMin = fToC (forecast.days[i].tempMin);
+            for (let e=0; e<24; e++){
+                forecast.days[i].hours[e].temp = fToC (forecast.days[i].hours[e].temp);
+            }
+        }
+        degreeInUse = 1;
+        refresh();
+    } else if (degreeInUse === 1) {
+        for(let i=0; i<14; i++) {
+            forecast.days[i].tempMax = cToF (forecast.days[i].tempMax);
+            forecast.days[i].tempMin = cToF (forecast.days[i].tempMin);
+            for (let e=0; e<24; e++){
+                forecast.days[i].hours[e].temp = cToF (forecast.days[i].hours[e].temp);
+            }
+        }
+        degreeInUse = 0;
+        refresh();
+    }  
+}
+
+function fToC (temp) { // converts Farenight in Celsius
+    let converted = (temp-32)*5/9;
+    converted = Math.trunc(converted * 10);
+    converted /= 10;
+    return converted; 
+}
+
+function cToF (temp) { // converts Celsius in Farenight
+    let converted = (temp*9/5)+32;
+    converted = Math.trunc(converted * 10);
+    converted /= 10;
+    return converted; 
 }
