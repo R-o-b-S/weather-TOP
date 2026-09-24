@@ -39,13 +39,19 @@ function extractForecast (VCforecast) { //builds up the forecast OBJ with only n
     for (let i=0; i<14; i++){
         const date = VCforecast.days[i].datetime;
         const condition = VCforecast.days[i].conditions;
-        const tempMax = VCforecast.days[i].tempmax;
-        const tempMin = VCforecast.days[i].tempmin;
+        let tempMax = "";
+        if (degreeInUse === 0) { tempMax = VCforecast.days[i].tempmax;} 
+        else if (degreeInUse === 1) {tempMax = fToC(VCforecast.days[i].tempmax);}
+        let tempMin = "";
+        if (degreeInUse === 0) {tempMin = VCforecast.days[i].tempmin;} 
+        else if (degreeInUse === 1) {tempMin = fToC(VCforecast.days[i].tempmin);}
         const humidity = VCforecast.days[i].humidity;
         const hours = [];
         for (let e=0; e<24; e++){ 
             const conditionH = VCforecast.days[i].hours[e].conditions;
-            const tempH = VCforecast.days[i].hours[e].temp;
+            let tempH = "";
+            if (degreeInUse === 0) { tempH = VCforecast.days[i].hours[e].temp;} 
+            else if (degreeInUse === 1) { tempH = fToC(VCforecast.days[i].hours[e].temp);}
             const humidityH = VCforecast.days[i].hours[e].humidity;
             const hour = new Hour (conditionH, tempH, humidityH);
             hours.push(hour);
